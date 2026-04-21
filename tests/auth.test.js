@@ -13,18 +13,32 @@ afterAll(async () => {
 });
 
 describe('Auth Routes', () => {
-  test('POST /auth/register should create a new user', async () => {
+  test('POST /auth/register should create a new user with default user role', async () => {
     const res = await request(app)
       .post('/auth/register')
       .send({
         name: 'Test User',
         email: 'testuser@example.com',
-        password: '123456',
-        role: 'user'
+        password: '123456'
       });
 
     expect(res.statusCode).toBe(201);
     expect(res.body.user.email).toBe('testuser@example.com');
+    expect(res.body.user.role).toBe('user');
+  });
+
+  test('POST /auth/register should not allow privilege escalation to trainer', async () => {
+    const res = await request(app)
+      .post('/auth/register')
+      .send({
+        name: 'Fake Trainer',
+        email: 'faketrainer@example.com',
+        password: '123456',
+        role: 'trainer'
+      });
+
+    expect(res.statusCode).toBe(201);
+    expect(res.body.user.role).toBe('user');
   });
 
   test('POST /auth/login should return a token', async () => {

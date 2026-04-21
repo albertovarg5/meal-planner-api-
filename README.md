@@ -2,163 +2,174 @@
 
 ## Description
 
-This API allows users to create meals, add foods, and track nutrition data. It is built using Node.js, Express, Sequelize, and SQLite.
+The Meal Planner API is a RESTful backend application that allows users to create meals, add foods, and track nutritional data over time.
 
-The goal of this API is to help users manage their daily meals and monitor calories, protein, carbs, and fats over time.
+It helps users monitor calories, protein, carbohydrates, and fats in an organized way.
+
+This project demonstrates backend development concepts including authentication, role-based authorization, database relationships, and testing.
 
 ---
 
-## Setup
+## 🛠️ Technologies Used
+
+- Node.js
+- Express.js
+- Sequelize ORM
+- SQLite
+- JWT (jsonwebtoken)
+- bcryptjs
+- Jest & Supertest
+
+---
+
+## ⚙️ Setup (Local)
 
 1. Install dependencies:
-   npm install
+npm install
 
 2. Seed the database:
-   npm run seed
+npm run seed
 
 3. Start the server:
-   node server.js
+node server.js
 
-The server will run on:
+Server runs at:
 http://localhost:3000
 
 ---
 
-## Authentication
+## 🔐 Authentication
 
-This API uses JWT authentication.
+This API uses JWT (JSON Web Tokens).
 
 ### Register
 
 POST /auth/register
-Creates a new user (role is always set to "user")
+
+Example request:
+{
+  "name": "Alberto",
+  "email": "alberto@test.com",
+  "password": "123456"
+}
+
+⚠️ Role is automatically set to "user" and cannot be chosen during registration.
+
+---
 
 ### Login
 
 POST /auth/login
-Returns a JWT token
+
+Example response:
+{
+  "message": "Login successful.",
+  "token": "YOUR_JWT_TOKEN"
+}
+
+---
 
 ### Using the Token
 
-Include this in your requests:
+Include this header in protected routes:
 
 Authorization: Bearer YOUR_TOKEN
 
 ---
 
-## Roles and Permissions
-
-This API includes role-based access control:
+## 👥 Roles and Permissions
 
 ### User
-
-* Can create, update, and delete their own meals and foods
-* Can view their own progress
+- Can create, update, and delete their own meals and foods
+- Can view their own progress
 
 ### Trainer
+- Can view all users
+- Can view all meals and progress
 
-* Can view all users
-* Can view all meals and progress
-
-⚠️ Important:
-Users cannot register as a trainer. This role must be assigned manually.
+⚠️ Users cannot register as a trainer. This role must be assigned manually.
 
 ---
 
-## Endpoints
+## 📡 API Endpoints
 
 ### Auth
-
-POST /auth/register - Create a new user
-POST /auth/login - Login and receive a token
+- POST /auth/register → Create user  
+- POST /auth/login → Login  
 
 ---
 
 ### Meals
-
-GET /meals - Get all meals for logged-in user
-POST /meals - Create a new meal
-PUT /meals/:id - Update a meal
-DELETE /meals/:id - Delete a meal
+- GET /meals → Get user meals  
+- POST /meals → Create meal  
+- PUT /meals/:id → Update meal  
+- DELETE /meals/:id → Delete meal  
 
 ---
 
 ### Foods
-
-POST /meals/:id/foods - Add food to a meal
-PUT /meals/foods/:foodId - Update a food item
-DELETE /meals/foods/:foodId - Delete a food item
+- POST /meals/:id/foods → Add food  
+- PUT /meals/foods/:foodId → Update food  
+- DELETE /meals/foods/:foodId → Delete food  
 
 ---
 
 ### Progress
-
-GET /progress - Get nutrition summary (calories, protein, carbs, fats)
+- GET /progress → Nutrition summary  
 
 ---
 
 ### Users
-
-GET /users/profile - Get current user profile
-
-GET /users (Trainer only) - Get all users
-GET /users/:id/meals (Trainer only) - Get meals for a specific user
+- GET /users/profile → Current user  
+- GET /users → Trainer only  
+- GET /users/:id/meals → Trainer only  
 
 ---
 
-## Error Handling
+## ⚠️ Error Handling
 
-This API returns appropriate status codes:
-
-* 200 - Success
-* 201 - Created
-* 400 - Bad request (invalid input)
-* 401 - Unauthorized (missing or invalid token)
-* 403 - Forbidden (not allowed)
-* 409 - Conflict (duplicate email)
-* 500 - Server error
+- 200 → Success  
+- 201 → Created  
+- 400 → Bad Request  
+- 401 → Unauthorized  
+- 403 → Forbidden  
+- 409 → Conflict (duplicate email)  
+- 500 → Server Error  
 
 ---
 
-## Testing
+## 🧪 Testing
 
 Run tests with:
 npm test
 
 Includes:
-
-* Authentication tests
-* Meal and food tests
-* Progress tests
-* Security tests (role protection and validation)
-
----
-
-## Technologies Used
-
-* Node.js
-* Express.js
-* Sequelize ORM
-* SQLite
-* JWT (jsonwebtoken)
-* bcryptjs
-* Jest (testing)
-* Supertest
+- Authentication tests  
+- Meals and foods tests  
+- Progress tests  
+- Role-based access control tests  
 
 ---
 
-## Notes
+## 📄 Documentation
 
-This project was developed as a backend final project and demonstrates:
+Postman API documentation:
 
-* RESTful API design
-* Authentication and authorization
-* Database relationships
-* Error handling and validation
-* Automated testing
+👉 PASTE YOUR POSTMAN LINK HERE
 
 ---
 
-## Author
+## 🧠 Features
+
+- JWT Authentication  
+- Role-Based Access Control (RBAC)  
+- CRUD operations  
+- Secure password hashing  
+- Error handling and validation  
+- Automated testing  
+
+---
+
+## 👨‍💻 Author
 
 Alberto Vargas
